@@ -104,6 +104,9 @@ dist
 .temp
 .cache
 
+# Cache Angular
+.angular
+
 # Docusaurus cache and generated files
 .docusaurus
 
