@@ -1,0 +1,37 @@
+<div class="conteudo">
+  <div class="titulo">
+    <h1>{{ titulo }}</h1>
+    <button
+      mat-icon-button
+      [autofocus]="false"
+      (click)="onCancelar()"
+      [disabled]="carregando">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <ng-content></ng-content>
+</div>
+
+<div class="botoes">
+  <button
+    *ngIf="usaConfirmar"
+    mat-flat-button
+    color="primary"
+    (click)="onConfirmar()"
+    [disabled]="carregando || confirmarDesable"
+    class="confirmar">
+    {{ confirmarLabel }}
+    <ng-container *ngIf="carregando">
+      <mat-spinner diameter="24"></mat-spinner>
+    </ng-container>
+  </button>
+  <button
+    *ngIf="usaCancelar"
+    mat-stroked-button
+    color="secondary"
+    (click)="onCancelar()"
+    [disabled]="carregando"
+    class="cancelar">
+    {{ cancelarLabel }}
+  </button>
+</div>

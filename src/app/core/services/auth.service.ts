@@ -1,51 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, throwError } from 'rxjs';
-
-// Services
-import { JwtHelperService } from '@auth0/angular-jwt';
-
+import { Http } from '../extensions/http';
+import { Usuario } from '../models/usuario';
+import { LoginPostDto } from '../models/postDto/login.post.dto';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  private url: string = 'http://localhost:3000';
-
+export class AuthService extends Http {
   constructor(
-    private http: HttpClient,
+    private httpClient: HttpClient,
     private router: Router
-  ) {}
-
-  public sign(payload: { email: string; password: string }): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.url}/sign`, payload).pipe(
-      map(res => {
-        localStorage.removeItem('access_token');
-        localStorage.setItem('access_token', res.token);
-        return this.router.navigate(['admin']);
-      }),
-      catchError(e => {
-        if (e.error.message) return throwError(() => e.error.message);
-
-        return throwError(
-          () =>
-            'No momento não estamos conseguindo validar este dados, tente novamente mais tarde!'
-        );
-      })
-    );
+  ) {
+    super(httpClient);
   }
 
-  public logout() {
-    localStorage.removeItem('access_token');
-    return this.router.navigate(['']);
+  login(dto: LoginPostDto) {
+    debugger;
+    return this.post<any>(`usuarios/login`, dto);
   }
 
-  public isAuthenticated(): boolean {
-    const token = localStorage.getItem('access_token');
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
 
-    if (!token) return false;
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 
-    const jwtHelper = new JwtHelperService();
-    return !jwtHelper.isTokenExpired(token);
+  clearToken(): void {
+    localStorage.removeItem('token');
   }
 }

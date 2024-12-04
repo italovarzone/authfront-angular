@@ -1,0 +1,12 @@
+<app-dialog
+  [titulo]="titulo"
+  [confirmarLabel]="confirmarLabel"
+  [cancelarLabel]="cancelarLabel"
+  (cancelar)="cancelar()"
+  (confirmar)="confirmar()"
+  [usaCancelar]="usaCancelar"
+  [usaConfirmar]="usaConfirmar">
+  <span>
+    {{ mensagem }}
+  </span>
+</app-dialog>

@@ -1,0 +1,46 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .bottombar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around; /* Ajusta o espaçamento uniforme entre os botões */
+    align-items: center;
+    background-color: #1976d2;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+
+    button {
+      flex: 1; /* Garante que os botões tenham o mesmo tamanho */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: white;
+
+      mat-icon {
+        font-size: 28px; /* Ajusta o tamanho dos ícones */
+        margin: 0; /* Remove margens */
+        line-height: 1; /* Ajusta o espaçamento interno */
+      }
+
+      &.active {
+        color: #ffcc00; /* Cor do botão ativo */
+      }
+
+      &:hover {
+        color: #ffcc00; /* Cor ao passar o mouse */
+      }
+    }
+  }
+}

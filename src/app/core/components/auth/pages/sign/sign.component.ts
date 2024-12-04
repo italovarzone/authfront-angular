@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Service
 import { AuthService } from 'src/app/core/services/auth.service';
+import { finalize } from 'rxjs';
+import { LoginPostDto } from 'src/app/core/models/postDto/login.post.dto';
+import { AppStateService } from 'src/app/app.state.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign',
@@ -10,9 +14,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./sign.component.scss'],
 })
 export class SignComponent implements OnInit {
+  carregando = false;
+
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private appStateService: AppStateService,
+    private router: Router
   ) {}
 
   public formAuth: FormGroup = this.formBuilder.group({
@@ -25,14 +33,25 @@ export class SignComponent implements OnInit {
 
   public submitForm() {
     if (this.formAuth.valid) {
+      const dto: LoginPostDto = {
+        email: this.formAuth.value.email,
+        senha: this.formAuth.value.password,
+      };
+      this.carregando = true;
       this.authService
-        .sign({
-          email: this.formAuth.value.email,
-          password: this.formAuth.value.password,
-        })
+        .login(dto)
+        .pipe(finalize(() => (this.carregando = false)))
         .subscribe({
-          next: res => res,
-          error: e => (this.msgError = e),
+          next: resultado => {
+            debugger;
+            this.appStateService.setUsuarioLogado(resultado.usuario);
+            this.authService.saveToken(resultado.token);
+            this.router.navigate(['/home']); // Ajuste o path conforme necessário
+            console.log('Login bem-sucedido!');
+          },
+          error: err => {
+            this.msgError = 'Email ou senha inválidos.';
+          },
         });
     }
   }

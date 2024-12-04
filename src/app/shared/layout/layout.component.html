@@ -1,0 +1,31 @@
+<div class="layout-container">
+  <mat-toolbar color="primary" class="bottombar">
+    <button
+      mat-icon-button
+      (click)="navigateTo('clientes')"
+      [class.active]="currentRoute === 'clientes'">
+      <mat-icon>group</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="navigateTo('agendamentos')"
+      [class.active]="currentRoute === 'agendamentos'">
+      <mat-icon>event</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="navigateTo('agenda')"
+      [class.active]="currentRoute === 'agenda'">
+      <mat-icon>calendar_today</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="navigateTo('procedimentos')"
+      [class.active]="currentRoute === 'procedimentos'">
+      <mat-icon>medical_services</mat-icon>
+    </button>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

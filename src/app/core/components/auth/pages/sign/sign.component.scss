@@ -1,6 +1,10 @@
 @import '../../../../../../scss/base/variables';
 
 :host {
+  display: flex;
+  flex-direction: column;
+  margin-top: 180px;
+
   form {
     display: flex;
     flex-direction: column;
@@ -17,7 +21,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border-bottom: 1px solid $preto;
+      border-bottom: 1px solid $cinza;
 
       svg {
         width: 30px;
@@ -28,9 +32,20 @@
         border: none;
         font-size: 18px;
         &::placeholder {
-          color: $preto;
+          color: $cinza;
         }
       }
+    }
+  }
+
+  .box-login {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 700px) {
+    .box-login {
+      display: block;
     }
   }
 }
